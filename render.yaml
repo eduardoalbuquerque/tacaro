@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: tacaro-api
+    runtime: docker
+    repo: https://github.com/eduardoalbuquerque/tacaro
+    branch: master
+    envVars:
+      - key: DATABASE_URL
+        value: "jdbc:postgresql://seu-db-host:5432/tacaro"
+      - key: DATABASE_USER
+        value: "seu_usuario"
+      - key: DATABASE_PASSWORD
+        value: "sua_senha"
+    plan: free
