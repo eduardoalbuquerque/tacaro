@@ -7,14 +7,14 @@ WORKDIR /app
 # Copie os arquivos do seu projeto para dentro do container
 COPY . .
 
-# Dê permissão de execução ao Gradle Wrapper
+# Dê permissão de execução ao Gradle Wrapper (caso não tenha)
 RUN chmod +x ./gradlew
 
 # Baixe as dependências primeiro para otimizar o cache do Docker
-RUN ./gradlew dependencies
+RUN ./gradlew dependencies --no-daemon
 
-# Execute o comando Gradle para construir o JAR
-RUN ./gradlew bootJar
+# Execute o comando Gradle para construir o JAR (geralmente gerado em build/libs)
+RUN ./gradlew bootJar --no-daemon
 
 # Etapa 2: Use uma imagem mais leve para rodar a aplicação (JDK 17)
 FROM openjdk:17-jdk-slim
@@ -23,7 +23,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copie o JAR gerado na etapa anterior para o container
-COPY --from=builder /app/build/libs/tacaro-1.0.0.jar tacaro.jar
+COPY --from=builder /app/build/libs/*.jar tacaro.jar
 
 # Exponha a porta em que o Spring Boot irá rodar
 EXPOSE 8080
