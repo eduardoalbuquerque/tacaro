@@ -1,5 +1,5 @@
-# Etapa 1: Use a imagem base do Gradle
-FROM gradle:7.3-jdk17 AS builder
+# Etapa 1: Use a imagem base do Gradle mais recente
+FROM gradle:8.5-jdk17 AS builder
 
 # Defina o diretório de trabalho dentro do container
 WORKDIR /app
@@ -7,8 +7,14 @@ WORKDIR /app
 # Copie os arquivos do seu projeto para dentro do container
 COPY . .
 
-# Execute o comando Gradle para construir o JAR (geralmente gerado em build/libs)
-RUN gradle bootJar
+# Dê permissão de execução ao Gradle Wrapper
+RUN chmod +x ./gradlew
+
+# Baixe as dependências primeiro para otimizar o cache do Docker
+RUN ./gradlew dependencies
+
+# Execute o comando Gradle para construir o JAR
+RUN ./gradlew bootJar
 
 # Etapa 2: Use uma imagem mais leve para rodar a aplicação (JDK 17)
 FROM openjdk:17-jdk-slim
