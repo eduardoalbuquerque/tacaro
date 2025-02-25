@@ -1,5 +1,5 @@
 # Etapa 1: Use a imagem base do Gradle mais recente
-FROM gradle:8.5-jdk17 AS builder
+FROM gradle:8.12.1-jdk17 AS builder
 
 # Defina o diretório de trabalho dentro do container
 WORKDIR /app
