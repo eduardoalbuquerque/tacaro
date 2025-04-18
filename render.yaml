@@ -6,9 +6,9 @@ services:
     branch: master
     envVars:
       - key: DATABASE_URL
-        value: "jdbc:postgresql://seu-db-host:5432/tacaro"
+        value: "jdbc:postgresql://ep-long-rice-a4d88dvo-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
       - key: DATABASE_USER
-        value: "seu_usuario"
+        value: "neondb_owner"
       - key: DATABASE_PASSWORD
-        value: "sua_senha"
+        value: "npg_vdC1ByiLuma7"
     plan: free
